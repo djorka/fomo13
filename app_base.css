@@ -1,0 +1,73 @@
+#my_icon {
+  max-height: 30px;
+  border-radius: 50%;
+}
+
+h4.utc-time {
+    color: #AA3333;
+}
+
+#categories{
+    list-style: none;
+}
+
+#product_list{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.activeCat{
+    font-weight: bolder;
+    color: #7c312f;
+}
+
+li:active{
+    font-weight: bolder;
+    color: #7c312f;
+}
+
+.noBullets{
+    list-style: none;
+    display: inline-block;
+}
+
+.product_tile{
+    display: inline-block;
+    margin: 12px 18px;
+    padding: 12px;
+    border: 2px solid #cccccc;
+    border-radius: 4px;
+    width: 300px;
+    vertical-align: top;
+    min-height: 100px;
+    height: 100%;
+}
+
+#previous_page, #next_page {
+    cursor: pointer;
+}
+
+#recent_view{
+  list-style: none;
+  display: inline-block;
+}
+
+.thumbnail{
+  width: 100px;
+}
+
+.main_image{
+  width: 400px;
+}
+
+.in_line_block{
+  display: inline-block;
+}
+.detail_container{
+
+}
+
+.small_margin{
+  margin: 5px;
+}

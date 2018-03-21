@@ -1,0 +1,86 @@
+<%inherit file="/homepage/templates/base.htm" />
+<%! from catalog import models as cmod %>
+
+<%block name="nav">
+    <div class="">
+      <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="/"><img id="my_icon" src="${ STATIC_URL }homepage/media/img/drum.jpg"></a>
+          </div>
+
+          <ul class="nav navbar-nav navbar-right">
+            % if request.user.is_authenticated:
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">${ user.email }
+                  <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Account</a></li>
+                  <li><a href="#">Orders</a></li>
+                  <li><a href="/account/logout/"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                </ul>
+              </li>
+            % else:
+              <li class="${ 'active' if request.dmp.page == 'signup' else '' }"><a href="/account/signup/">Signup</a></li>
+              <li class="${ 'active' if request.dmp.page == 'login' else '' }"><a href="/account/login/">Login</a></li>
+            % endif
+          </ul>
+
+          <ul class="nav navbar-nav navbar-right">
+            <li class="${ 'active' if request.dmp.page == 'index' else '' }"><a href="/">Home</a></li>
+            <li class="${ 'active' if request.dmp.page == 'about' else '' }"><a href="/about/">About</a></li>
+            <li class="${ 'active' if request.dmp.page == 'contact' else '' }"><a href="/contact/">Contact</a></li>
+            <li class="${ 'active' if request.dmp.page == 'terms' else '' }"><a href="/terms/">Terms</a></li>
+            <li class="${ 'active' if request.dmp.page == 'faq' else '' }"><a href="/faq/">FAQ</a></li>
+            <li class="${ 'active' if request.dmp.page == 'sections' else '' }"><a href="/sections/">Sections</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+</%block>
+
+<%block name="content_left">
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+    <div class="container">
+        <div class="row">
+            <div class="col-2">
+                <ul id="categories">
+                    <li class="${ 'activeCat' if category is None else ''}"><a href="/catalog/index/">All Products</a></li>
+                    % for cat in cmod.Category.objects.order_by('name'):
+                        <li class="${ 'activeCat' if category is None else ''}"><a href="/catalog/index/${cat.id}/">${ cat.name }</a></li>
+                    % endfor
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</%block>
+
+<%block name="footer">
+    <div class="content">
+      <p class="server-time">The current server time is ${ now }.</p>
+    </div>
+</%block>
+
+<%block name="content_right">
+    <h2 class="text-center">Recently Viewed</h2>
+    <%
+    if request.dmp.page == 'detail':
+        recent = request.last_five[1:6]
+    else:
+        recent = request.last_five[0:5]
+    %>
+    <ol id="recent_view">
+        %for p in recent:
+            <li class="recent_list">
+                <a href="/catalog/detail/${p.id}/">
+                    <img src="${p.image_url()}" class="img-fluid thumbnail" />
+                    <p class="text-center">${p.name}</p>
+                </a>
+            </li>
+        %endfor
+    </ol>
+</%block>
