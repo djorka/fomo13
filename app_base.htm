@@ -1,0 +1,46 @@
+<%inherit file='homepage/templates/base.htm'/>
+<%! from catalog import models as cmod %>
+##  the '!' sends the line to top of file when it is generated so it isn't called inside of the function every time
+
+<%block name="menu">
+    <li class="nav-item ${ 'active' if request.dmp.page == 'index' else ''}"><a class="nav-link" href="/catalog/index/">Catalog</a></li>
+    <li class="nav-item ${ 'active' if request.dmp.page == 'productlist' else ''}"><a class="nav-link" href="/manager/productlist/">Product List</a></li>
+    <li class="nav-item ${ 'active' if request.dmp.page == 'createprod' else ''}"><a class="nav-link" href="/manager/createprod/">Create Product</a></li>
+</%block>
+
+<%block name="left_section">
+    <ul id="category_list">
+        %if int(category) == 0:
+            <li><a id="active-link" href="/catalog/index/">All Products</a></li>
+        %else:
+            <li><a href="/catalog/index/">All Products</a></li>
+        %endif
+        %for c in cat:
+            %if int(c.id) == int(category):
+                <li><a id="active-link" href="/catalog/index/${c.id}/">${c.name}</a></li>
+            %else:
+                <li><a href="/catalog/index/${c.id}/">${c.name}</a></li>
+            %endif
+        %endfor
+    </ul>
+</%block>
+
+<%block name="right_section">
+    <h2 class="text-center">Recently Viewed</h2>
+    <%
+    if request.dmp.page == 'detail':
+        recent = request.last_five[1:6]
+    else:
+        recent = request.last_five[0:5]
+    %>
+    <ol id="recent_view">
+        %for p in recent:
+            <li class="recent_list">
+                <a href="/catalog/detail/${p.id}/">
+                    <img src="${p.image_url()}" class="img-fluid" />
+                    <p class="text-center">${p.name | h}</p>
+                </a>
+            </li>
+        %endfor
+    </ol>
+</%block>
