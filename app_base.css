@@ -1,0 +1,30 @@
+#active-link {
+    color: black;
+}
+#categories {
+    /*display: inline-block;*/
+    padding-top: 25px;
+    border-right: 3px solid #ff9b21;
+    vertical-align: top;
+    min-height: 40px;
+}
+#category_list{
+    list-style: none;
+    color: black;
+    float: right;
+}
+#category_list li {
+    padding-bottom: 5px;
+}
+#recent_view{
+    list-style: none;
+}
+.recent_list {
+    display: flex;
+    margin-bottom: 8px;
+    padding: 8px 8px 0 8px;
+    border: 1px solid #000000;
+    border-radius: 6px;
+    width: 100px;
+    min-height: 25px;
+}
