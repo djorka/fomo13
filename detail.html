@@ -1,0 +1,40 @@
+<%inherit file="app_base.htm" />
+
+<%block name="content">
+    <h1>${prod.name|h}</h1><br><br>
+    <div class="container detail_container">
+
+      ##     Product images
+      <div class="in_line_block">
+          <ul class="float-left noBullets">
+              %for i in img:
+                  <li class="product_images_detail thumbnail">
+                      <img src="${i}" alt="Product Detail Image" class="img-fluid"/>
+                  </li>
+              %endfor
+          </ul>
+      </div>
+
+      ##     Main Product Image
+      <div class="in_line_block small_margin">
+          <ul class="float_right noBullets">
+              <li id="product_images_main">
+                  <img src="${prod.image_url()}" alt="Main Product Detail Image" class="img-fluid main_image"/>
+              </li>
+          </ul>
+      </div>
+
+      ##     Text for the product
+      <div id="product_info" class="float_right">
+          <!-- <h1>${prod.name|h}</h1> -->
+          <h3>This ${prod.TITLE} is a ${prod.name}</h3>
+            <h4>Ignore the next line, it's just part of the description: ${prod.description}</h4>
+      </div>
+
+      ##     Buy Button
+      <div id="" class="">
+        <a href="/catalog/index/"><button type="button" class="btn btn-primary">Buy</button></a>
+      </div>
+
+  </div>
+</%block>
