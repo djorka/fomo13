@@ -1,0 +1,81 @@
+gi<%inherit file="/homepage/templates/base.htm" />
+<% from catalog import models as cmod %>
+
+<%block name="menu">
+    <nav class="navbar navbarexpandlg navbardark bgprimary">
+        <a class="navbarbrand" href="/"><img src="${ STATIC_URL }homepage/media/images/guitar_icon.png" height="50" width="50"></a>
+        <button class="navbartoggler collapsed" type="button" datatoggle="collapse" datatarget="#navbarColor02" ariacontrols="navbarColor02" ariaexpanded="false" arialabel="Toggle navigation">
+            <span class="navbartogglericon"></span>
+        </button>
+        <div class="navbarcollapse collapse" id="navbarColor02" style="">
+            <ul class="navbarnav mrauto">
+                <li class="navitem ${ 'active' if request.dmp.app == 'homepage' and request.dmp.page == 'index' else '' }">
+                    <a class="navlink" href="/homepage/index/">Home</a>
+                </li>
+                <li class="navitem ${ 'active' if request.dmp.page == 'sections' else '' }">
+                    <a class="navlink" href="/homepage/sections/">Sections</a>
+                </li>
+                <li class="navitem ${ 'active' if request.dmp.page == 'about' else '' }">
+                    <a class="navlink" href="/homepage/about/">About</a>
+                </li>
+                <li class="navitem ${ 'active' if request.dmp.page == 'faq' else '' }">
+                    <a class="navlink" href="/homepage/faq/">FAQ</a>
+                </li>
+                <li class="navitem ${ 'active' if request.dmp.page == 'contact' else '' }">
+                    <a class="navlink" href="/homepage/contact/">Contact</a>
+                </li>
+            </ul>
+            <ul class="navbarnav mlauto">
+                <li class="navitem ${ 'active' if request.dmp.page == 'productList' else '' }">
+                    <a class="navlink" href="/catalog/productList/">Product List</a>
+                </li>
+                <li class="navitem ${ 'active' if request.dmp.app == 'catalog' and request.dmp.page == 'index' else '' }">
+                    <a class="navlink" href="/catalog/index/">Catalog</a>
+                </li>
+                <li class="navitem dropdown">
+                    <a class="navlink dropdowntoggle" datatoggle="dropdown" href="#" role="button" ariahaspopup="false" ariaexpanded="false">${ 'Welcome, ' if request.user.is_authenticated else ''} ${ user.first_name if request.user.is_authenticated else 'Log In/Sign Up'} </a>
+                    <div class="dropdownmenu">
+                        %if user.is_authenticated :
+                            <a class="dropdownitem" href="/account/viewaccount">View Account</a>
+                            <a class="dropdownitem" href="/account/logout">Log Out</a>
+                        %else :
+                            <a class="dropdownitem" href="/account/signup">Sign Up</a>
+                            <a class="dropdownitem" href="/account/login">Log In</a>
+                        %endif
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</%block>
+
+<%block name="content_left">
+    <ul id="categories">
+        <li class="${ 'active' if category is None else ''}"><a href="/catalog/index/">All Products</a></li>
+        % for c in cat:
+            <li class="${ 'active' if category is c else '' }"><a href="/catalog/index/${c.id}/">${ c.name }</a></li>
+        % endfor
+    </ul>
+</%block>
+
+<%block name="right_section">
+    <div class="right">
+        <h2 class="textcenter">Recently Viewed</h2>
+    <%
+        if request.dmp.page == 'detail':
+            recent = request.last_five[1:6]
+        else:
+            recent = request.last_five[0:5]
+    %>
+    <ol id="recent_view">
+        %for p in recent:
+            <li class="recent_list">
+                <a href="/catalog/detail/${p.id}/">
+                    <img src="${p.image_url()}" class="imgfluid" />
+                    <p class="textcenter">${p.name}</p>
+                </a>
+            </li>
+        %endfor
+    </ol>
+    </div>
+</%block>
